@@ -33,7 +33,13 @@
     <ClCompile Include="modelerview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sample.cpp">
+    <ClCompile Include="MyModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MarchingCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Metaball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -63,6 +69,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarchingCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Metaball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

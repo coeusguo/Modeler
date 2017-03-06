@@ -257,7 +257,8 @@ void drawBox( double x, double y, double z )
         glMatrixMode( GL_MODELVIEW );
         glPushMatrix();
         glScaled( x, y, z );
-        
+
+		//draw a stupid unit cube
         glBegin( GL_QUADS );
         
         glNormal3d( 0.0, 0.0, -1.0 );
