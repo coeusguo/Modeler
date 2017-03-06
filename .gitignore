@@ -27,3 +27,6 @@
 *.exe
 *.out
 *.app
+
+modeler.VC.db
+modeler.VC.VC.opendb
