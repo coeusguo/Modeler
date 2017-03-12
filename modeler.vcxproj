@@ -155,6 +155,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="InverseKinematics.cpp" />
     <ClCompile Include="MarchingCube.cpp" />
     <ClCompile Include="Metaball.cpp" />
     <ClCompile Include="modelerapp.cpp">
@@ -186,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="bitmap.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="InverseKinematics.h" />
     <ClInclude Include="MarchingCube.h" />
     <ClInclude Include="mat.h" />
     <ClInclude Include="Metaball.h" />

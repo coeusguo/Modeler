@@ -17,10 +17,10 @@ class Mat3 {
 	//---[ Private Variable Declarations ]-----------------
 
 		// matrix elements in row major order
-	T		n[9];
+	
 
 public:
-	
+	T		n[9];
 	//---[ Constructors ]----------------------------------
 
 	Mat3()
@@ -75,7 +75,7 @@ public:
 
 #if _MSC_VER >= 1300
 
-        template <class U> friend Mat3<U> operator -( const Mat3<U>& a );
+    template <class U> friend Mat3<U> operator -( const Mat3<U>& a );
 	template <class U> friend Mat3<U> operator +( const Mat3<U>& a, const Mat3<U>& b );
 	template <class U> friend Mat3<U> operator -( const Mat3<U>& a, const Mat3<U>& b );
 	template <class U> friend Mat3<U> operator *( const Mat3<U>& a, const Mat3<U>& b );
@@ -84,7 +84,7 @@ public:
 	template <class U> friend Mat3<U> operator /( const Mat3<U>& a, const double d );
 	template <class U> friend bool operator ==( const Mat3<U>& a, const Mat3<U>& b );
 	template <class U> friend bool operator !=( const Mat3<U>& a, const Mat3<U>& b );
-
+	template <class U> friend Vec3<U> operator *(const Mat3<T>& a, const Vec3<T>& v);
 #else // _MSC_VER >= 1300
 
         friend Mat3<T> operator -( const Mat3<T>& a );
@@ -204,7 +204,7 @@ public:
 				if( k != i ) {
 					float aki = a[k][i];
 					for( l=0;l<4;l++ ) {
-						a[k][l] -= aki * a[i][l];
+						a[k][l] -= aki * a[i][l];//a[k][l] = a[k][l] - aki * a[i][l]
 						if( fabs(a[k][l]) < 0.00000001 ) a[k][l] = 0.0;
 						b[k][l] -= aki * b[i][l];
 						if( fabs(b[k][l]) < 0.00000001 ) b[k][l] = 0.0;

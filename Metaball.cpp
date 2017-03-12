@@ -33,7 +33,7 @@ void Metaball::drawMetaball() {
 				currentVertex->value += radius2 / distance2;
 				//cout << currentVertex->value << endl;
 				float factor = radius2 / (distance2*distance2);
-				//cubeGrid.vertices[j].normal+=ballToPoint*normalScale;
+				
 				currentVertex->normal[0] += (x - ballx) * factor;
 				currentVertex->normal[1] += (y - bally) * factor;
 				currentVertex->normal[2] += (z - ballz) * factor;
