@@ -257,7 +257,7 @@ int main()
 	controls[LSYSTEMX] = ModelerControl("L x", -5, 5, 1, -3);
 	controls[LSYSTEMZ] = ModelerControl("L z", -5, 5, 1, -3);
 	controls[LSYSTEM] = ModelerControl("Enable L-System", 0, 1, 1, 0);
-	controls[LSYSTEMLEVEL] = ModelerControl("L-System Level", 1, 4, 1, 3);
+	controls[LSYSTEMLEVEL] = ModelerControl("L-System Level", 1, 5, 1, 3);
 	//controls[LEGCONSTRAINT1] = ModelerControl("Constraint angle1", 45, 135, 1, 135);
 	//controls[LEGCONSTRAINT2] = ModelerControl("Constraint angle", 30, 180, 1, 30);
 
@@ -584,6 +584,8 @@ float* MyModel::getRotateAngles(Vec3f target) {
 	//
 	if (target[0] < 0)
 		result[1] = - result[1];
+	if (target[1] < 0)
+		result[0] = -result[0];
 	//cout << "angle:" << result[1] << endl;
 	return result;
 }
