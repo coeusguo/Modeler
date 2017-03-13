@@ -1,38 +1,21 @@
-﻿  MyModel.cpp
+﻿  InverseKinematics.cpp
 c:\users\coeus\desktop\comp4411\modeler\inversekinematics.h(82): warning C4305: 'initializing': truncation from 'double' to 'const float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(27): warning C4305: 'argument': truncation from 'double' to 'const float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(28): warning C4305: 'argument': truncation from 'double' to 'const float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(30): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(70): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(81): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(88): warning C4800: 'double': forcing value to bool 'true' or 'false' (performance warning)
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(241): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(242): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(243): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(245): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(246): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(247): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(409): warning C4553: '==': operator has no effect; did you intend '='?
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(488): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(540): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(547): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(569): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(570): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(572): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(572): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(574): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(574): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-  Compiling...
-  modelerui.cxx
-c:\users\coeus\desktop\comp4411\modeler\modelerui.cxx(103): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-  modelerdraw.cpp
-c:\users\coeus\desktop\comp4411\modeler\modelerdraw.cpp(151): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-  modelerapp.cpp
-c:\users\coeus\desktop\comp4411\modeler\modelerapp.cpp(37): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(346): note: see declaration of 'strncpy'
-  Generating Code...
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(189): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(191): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(326): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(422): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(504): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(515): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(541): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(577): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(595): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(681): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(698): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(709): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(719): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(728): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(733): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(754): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\inversekinematics.cpp(763): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   modeler.vcxproj -> C:\Users\coeus\Desktop\comp4411\Modeler\.\Debug\modeler.exe
   modeler.vcxproj -> .\Debug/modeler.pdb (Full PDB)

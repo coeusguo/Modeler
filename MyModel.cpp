@@ -76,6 +76,9 @@ void MyModel::draw()
 		drawBox(0.2, 0.2, 0.2);
 		glPopMatrix();
 	}
+	else 
+		rightArm->reset();
+
 
 	if (VAL(ENABLEIKLEG)) {
 		Vec3f destination(VAL(IKXLEG), VAL(IKYLEG), VAL(IKZLEG));
@@ -91,6 +94,9 @@ void MyModel::draw()
 		
 		glPopMatrix();
 	}
+	else 
+		rightLeg->reset();
+
 	// draw the floor
 	/**/
 	setAmbientColor(.1f, .1f, .1f);
@@ -148,7 +154,7 @@ void MyModel::draw()
 		glPushMatrix();
 		glRotated(result1[3], 0, 1, 0);
 		glPushMatrix();
-		glRotated(result1[0], 1, 0, 0);
+		glRotated(result1[2], 1, 0, 0);
 		drawLowerArm();
 		glPopMatrix();
 		glPopMatrix();
@@ -188,6 +194,7 @@ void MyModel::draw()
 	drawLowerTorso();
 
 	//right leg and ik part
+
 	glPushMatrix();
 	glTranslated(-0.8, -1.0, 0);
 	glPushMatrix();

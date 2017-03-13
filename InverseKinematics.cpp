@@ -654,7 +654,7 @@ Vec4f InverseKinematics2::getResult(Vec3f& destination) {
 		*/
 		//4.move arm1 along the direction
 		//test constraint2
-		bool boom = false;
+		//bool boom = false;
 		/*
 		if (enableConstraint) {
 			float value = -arm1 * arm2;
@@ -761,6 +761,13 @@ void InverseKinematics2::setConstraint1(float value) {
 
 void InverseKinematics2::setConstraint2(float value) {
 	constraint2 = value / 180 * 3.1415926;
+}
 
-	
+void InverseKinematics2::reset() {
+	arm1.zeroElements();
+	arm1[1] = -1;
+	arm2.zeroElements();
+	arm2[1] = -1;
+	joint = endPoint; joint[1] -= arm1Length;
+	effector = joint; effector[1] -= arm1Length;
 }

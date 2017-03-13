@@ -101,6 +101,7 @@ public:
 	void setConstraint(bool value);
 	void setConstraint1(float value);
 	void setConstraint2(float value);
+	void reset();
 };
 
 #endif // !INVERSE_KINEMATICS
