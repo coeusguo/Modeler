@@ -18,6 +18,8 @@ private:
 	vector<Metaball> metaballs;
 	InverseKinematics2* rightArm;
 	InverseKinematics2* rightLeg;
+	Vec3f * calculateNewDir(Vec3f newDir, Vec3f lastDir);
+	void recursionTree3D(Vec3f dir, Vec3f nextdir, Vec3f currentLocationint, float length);
 public:
 	MyModel(int x, int y, int w, int h, char *label)
 		: ModelerView(x, y, w, h, label) {
@@ -27,6 +29,7 @@ public:
 		rightArm = new InverseKinematics2(rightPoint1, 1.0, 1.0);
 		rightLeg = new InverseKinematics2(rightPoint2, 1.5, 1.7);
 	}
+	float* getRotateAngles(Vec3f target);//input an target vector,the funtion will return 2 float value,first is rotate from z coord about x,and second value is rotate about y
 
 	virtual void draw();
 	void drawUpperArm();//including elbow
@@ -36,7 +39,8 @@ public:
 	void drawHead();//including neck
 	void drawUpperTorso();//including shoulder
 	void drawLowerTorso();//pelvis
-
+	
+	void initRecurtionTree();
 	void initMetaball();
 	void drawTorus();
 
@@ -91,13 +95,21 @@ void MyModel::draw()
 	/**/
 	setAmbientColor(.1f, .1f, .1f);
 	setDiffuseColor(COLOR_RED);
-
+	
 	glPushMatrix();
 	glTranslated(-5, 0, -5);
 	drawBox(10, 0.01f, 10);
 	glPopMatrix();
-
-
+	
+	if (VAL(LSYSTEM)) {
+		glPushMatrix();
+		glTranslated(VAL(LSYSTEMX), 0, VAL(LSYSTEMZ));
+		initRecurtionTree();
+		glPopMatrix();
+	}
+	
+	
+	//character drawing procedure
 	setAmbientColor(.1f, .1f, .1f);
 	setDiffuseColor(COLOR_GREEN);
 
@@ -211,166 +223,8 @@ void MyModel::draw()
 	glPopMatrix();
 
 	glPopMatrix();
-
-	/*
-	glPushMatrix();//m1
-		//x,y,z sliders
-		glTranslated(VAL(XPOS), VAL(YPOS), VAL(ZPOS));
-
-		glPushMatrix();//m2
-			glTranslated(0, 5.5, 0);
-
-			glPushMatrix();//m3
-				glTranslated(0, -1.3, 0);//before apply bow rotation slider
-				
-				glPushMatrix();//m4
-					glRotated(VAL(BOW), 1.0, 0.0, 0.0);
-					
-					glPushMatrix();//m5 translate back
-						glTranslated(0, 1.3, 0);
-						drawUpperTorso();
-						
-						//head
-						glPushMatrix();//m6
-							glTranslated(0, 0.2, 0);
-							drawHead();
-						glPopMatrix();
-
-						//right arm
-						glPushMatrix();
-							glTranslated(-1.2, 0, 0);//shoulder width / 2
-
-							glPushMatrix();
-								//apply Rotate slider
-								glRotated( - VAL(WAVE), 0.0, 0.0, 1.0);
-								//ik part
-								glPushMatrix();
-								glRotated(result[1], 0, 1, 0);
-								glPushMatrix();
-								glRotated(result[0], 1, 0, 0);
-								drawUpperArm();
-								glPopMatrix();
-								glPopMatrix();
-
-								glPushMatrix();
-								glTranslated(rightArm->joint[0], rightArm->joint[1] - 4.2, rightArm->joint[2]);
-								glPushMatrix();
-								glRotated(result[3], 0, 1, 0);
-								glPushMatrix();
-								glRotated(result[2], 1, 0, 0);
-								drawLowerArm();
-								glPopMatrix();
-								glPopMatrix();
-								glPopMatrix();
-
-							glPopMatrix();
-						glPopMatrix();//pop rotate slider
-					glPopMatrix();//pop right arm translate
-
-						//left arm
-						glPushMatrix();
-		
-							glTranslated(1.2, 0, 0);//shoulder width / 2
-			
-							glPushMatrix();
-								//apply Rotate slider
-								glRotated(VAL(WAVE), 0.0, 0.0, 1.0);
-								drawUpperArm();
-				
-								glPushMatrix();
-									glTranslated(0, -1, 0);
-									drawLowerArm();
-								glPopMatrix();
-							glPopMatrix();//pop rotate slider
-						glPopMatrix();//pop left arm translate
-		
-					glPopMatrix();//m5 pop bow rotation related translate: glTranslated(0,-1.3,0)
-				glPopMatrix();//pop bow rotation slider
-			glPopMatrix();//m3 pop bow rotation related translate: glTranslated(0,1.3,0)
-		
-			//lower torso
-			glPushMatrix();
-				glTranslated(0, -1.3, 0);
-				drawLowerTorso();
-
-				//left leg
-				glPushMatrix();
-					glTranslated(0.8, -1.0, 0);
-
-					drawThigh();
-			
-					glPushMatrix();
-						glTranslated(0, -1.5, 0);
-						drawShank();
-					glPopMatrix();
-				glPopMatrix();
-			
-
-				//right leg
-				glPushMatrix();
-					glTranslated(-0.8, -1.0, 0);
-					drawThigh();
-					
-					glPushMatrix();
-						glTranslated(0, -1.5, 0);
-						drawShank();
-					glPopMatrix();
-				glPopMatrix();		
-			glPopMatrix();
-		
-
-		glPopMatrix();// pop s,y,z slider translate
-	glPopMatrix();// pop first translate
 	
 
-	
-	
-	/*
-	for (int i = 0; i < 4; i++)
-		cout << result[i] << ",";
-	cout << endl;
-	*/
-	/*
-	glPushMatrix();
-	glScaled(0.1, 0.1, 0.1);
-	glTranslated(0, 30, 0);
-	//drawTorus();
-	//drawMetaball();
-	initMetaball();
-	glPopMatrix();
-	*/
-	/*
-cout << result[0] << "," << result[1] << "," << result[2] << "," << result[3] << endl;
-glPushMatrix();
-glTranslated(0, 3.2, 0);
-
-glPushMatrix();
-glRotated(result[1], 0, 1, 0);
-
-glPushMatrix();
-glRotated(result[0],1, 0, 0);
-drawThigh();
-
-glPopMatrix();
-glPopMatrix();
-glPopMatrix();
-
-glPushMatrix();
-glTranslated(rightLeg->joint[0], rightLeg->joint[1], rightLeg->joint[2]);
-
-
-glPushMatrix();
-glRotated(result[3],0,1, 0);
-
-glPushMatrix();
-glRotated(result[2],1,0,0);
-drawShank();
-
-glPopMatrix();
-glPopMatrix();
-glPopMatrix();
-glPopMatrix();
-*/
 }
 
 int main()
@@ -393,9 +247,13 @@ int main()
 	controls[IKZLEG] = ModelerControl("IK z leg", -3.2, 2.8, 0.1, 0);
 	controls[ENABLEIKLEG] = ModelerControl("Enable Leg IK", 0, 1, 1, 0);
 	controls[LEGCONSTRAINT] = ModelerControl("Leg IK Constraint", 0, 1, 1, 0);
+	controls[LSYSTEMX] = ModelerControl("L x", -5, 5, 1, -3);
+	controls[LSYSTEMZ] = ModelerControl("L z", -5, 5, 1, -3);
+	controls[LSYSTEM] = ModelerControl("Enable L-System", 0, 1, 1, 0);
+	controls[LSYSTEMLEVEL] = ModelerControl("L-System Level", 1, 4, 1, 3);
 	//controls[LEGCONSTRAINT1] = ModelerControl("Constraint angle1", 45, 135, 1, 135);
 	//controls[LEGCONSTRAINT2] = ModelerControl("Constraint angle", 30, 180, 1, 30);
-	
+
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS);
 	return ModelerApplication::Instance()->Run();
 }
@@ -596,4 +454,129 @@ void MyModel::demo() {
 	//mat.transpose();
 	for (int i = 0; i < 16; i++)
 		cout << mat.getEntry(i/4,i%4)<< ",";
+}
+
+//L-system
+void MyModel::recursionTree3D(Vec3f dir, Vec3f nextdir, Vec3f currentLocation, float length) {//dir and nextdir must be unit vector
+	//cout << "dir:" << dir[0] << "," << dir[1] << "," << dir[2] << endl;
+	//cout << "nextdir:" << nextdir[0] << "," << nextdir[1] << "," << nextdir[2] << endl;
+	float width = length / 4.0f;
+	//cout << length;
+	nextdir *= length;
+
+	if (length == 0.5) {
+		glColor3ub(0, 255, 0);
+		setAmbientColor(.1f, .1f, .1f);
+		setDiffuseColor(COLOR_GREEN);
+		//cout << nextdir[0] <<","<<nextdir[1]<<","<< nextdir[2] << endl;
+		float* rotateAngle = getRotateAngles(nextdir);
+		glPushMatrix();
+		glTranslatef(currentLocation[0], currentLocation[1], currentLocation[2]);
+		glPushMatrix();
+		glRotatef(rotateAngle[1], 0, 1, 0);
+		glPushMatrix();
+		glRotatef(rotateAngle[0], 1, 0, 0);
+		//cout << rotateAngle[0] << "," << rotateAngle[1] << endl;
+		drawCylinder(length, 0.05, 0.05);
+		glPopMatrix();
+		glPopMatrix();
+		glPopMatrix();
+		return;
+		
+	}
+	setAmbientColor(1.0f, 1.0f, 1.0f);
+	setDiffuseColor(0.545,0.271,0.075);
+	float* rotateAngle = getRotateAngles(nextdir);
+	glPushMatrix();
+	glTranslatef(currentLocation[0], currentLocation[1], currentLocation[2]);
+	glPushMatrix();
+	glRotatef(rotateAngle[1], 0, 1, 0);
+	glPushMatrix();
+	glRotatef(rotateAngle[0], 1, 0, 0);
+	//cout << rotateAngle[0] << "," << rotateAngle[1] << endl;
+	drawCylinder(length, 0.1, 0.1);
+	glPopMatrix();
+	glPopMatrix();
+	glPopMatrix();
+	currentLocation += nextdir;//update current location
+	
+	nextdir.normalize();
+	
+	Vec3f* newDir = calculateNewDir(dir, nextdir);
+	
+	//cout << newDir[0][0] << "," << newDir[0][1] << "," << newDir[0][2] << endl;
+	recursionTree3D(nextdir, newDir[0], currentLocation, length / 2.0f);
+	recursionTree3D(nextdir, newDir[1], currentLocation, length / 2.0f);
+	recursionTree3D(nextdir, newDir[2], currentLocation, length / 2.0f);
+	recursionTree3D(nextdir, newDir[3], currentLocation, length / 2.0f);
+}
+
+Vec3f* MyModel::calculateNewDir(Vec3f newDir, Vec3f lastDir) {
+	//cout << newDir[0] << "," << newDir[1] << "," << newDir[2] << endl;
+	//cout << lastDir[0] << "," << lastDir[1] << "," << lastDir[2] << endl;
+	float deltaValue = newDir * lastDir;
+	Vec3f lastDirNormal = lastDir;
+	lastDirNormal.normalize();
+	Vec3f projVec = deltaValue * lastDirNormal;
+	Vec3f deltaVec = projVec - newDir;
+	Vec3f deltaVecRotate90 = newDir ^ lastDir;
+	deltaVecRotate90.normalize();
+	deltaVecRotate90 *= deltaValue;
+
+	Vec3f * result = new Vec3f[4];
+	result[0] = projVec - deltaVec;
+	result[2] = projVec + deltaVec;
+	result[3] = projVec + deltaVecRotate90;
+	result[1] = projVec - deltaVecRotate90;
+
+	for (int i = 0; i < 4; i++)
+		result[i].normalize();
+	//cout << result[0][0] << "," << result[0][1] << "," << result[0][2] << endl;
+	return result;
+}
+
+void MyModel::initRecurtionTree() {
+	Vec3f treeLocation(0, 0, 0);
+	float trunkHeight = pow(2, VAL(LSYSTEMLEVEL)  - 2);
+	Vec3f inidirVec(0, 1, 0);
+	Vec3f nextDirSeed(0, 1, 1);
+	nextDirSeed.normalize();
+	Vec3f* newDir = calculateNewDir(nextDirSeed, inidirVec);
+	Vec3f currentLocation = inidirVec * trunkHeight;
+	setAmbientColor(1.0f, 1.0f, 1.0f);
+	setDiffuseColor(0.545, 0.271, 0.075);
+	glPushMatrix();
+	glRotated(-90, 1, 0, 0);
+	drawCylinder(trunkHeight, 0.1, 0.1);
+	glPopMatrix();
+	//cout << newDir[0][0] << "," << newDir[0][1] << "," << newDir[0][2] << endl;
+	//cout << newDir[1][0] << "," << newDir[1][1] << "," << newDir[1][2] << endl;
+	//cout << newDir[2][0] << "," << newDir[2][1] << "," << newDir[2][2] << endl;
+	//cout << newDir[3][0] << "," << newDir[3][1] << "," << newDir[3][2] << endl;
+	//cout << inidirVec[0] << "," << inidirVec[1] << "," << inidirVec[2] << endl;
+	recursionTree3D(inidirVec,newDir[0], currentLocation, trunkHeight);
+	recursionTree3D(inidirVec,newDir[1], currentLocation, trunkHeight);
+	recursionTree3D(inidirVec,newDir[2], currentLocation, trunkHeight);
+	recursionTree3D(inidirVec,newDir[3], currentLocation, trunkHeight);
+}
+
+float* MyModel::getRotateAngles(Vec3f target) {
+	float* result = new float[2];
+	Vec3f yaxis(0, 1, 0);
+	Vec3f zaxis(0, 0, 1);
+	Vec3f projVecY = target * yaxis * yaxis;
+	Vec3f rotateVec = target - projVecY;
+	Vec3f planeVec(0, 0, rotateVec.length());
+	Vec3f planeTarget(0, projVecY.length(), rotateVec.length());
+	
+	result[0] = -acosf((zaxis * planeTarget) / planeTarget.length()) / 3.1416 * 180;
+	if (rotateVec.length() != 0)
+		result[1] = acosf((rotateVec * planeVec) / (rotateVec.length() * planeVec.length())) / 3.1416 * 180;
+	else
+		result[1] = 0;
+	//
+	if (target[0] < 0)
+		result[1] = - result[1];
+	//cout << "angle:" << result[1] << endl;
+	return result;
 }
