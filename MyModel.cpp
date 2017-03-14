@@ -168,10 +168,16 @@ void MyModel::draw()
 		drawUpperArm();
 		glPushMatrix();
 		glTranslated(0, -1.0, 0);
+		if (VAL(TERMINATER)) {
+			glPushMatrix();
+			glRotated(-90, 1, 0, 0);
+		}
 		drawLowerArm();
 		glPopMatrix();
 		glPopMatrix();
 		glPopMatrix();
+		if (VAL(TERMINATER))
+			glPopMatrix();
 	}
 	//left arm,no ik
 	glPushMatrix();
@@ -181,10 +187,16 @@ void MyModel::draw()
 	drawUpperArm();
 	glPushMatrix();
 	glTranslated(0, -1.0, 0);
+	if (VAL(TERMINATER)) {
+		glPushMatrix();
+		glRotated(-90, 1, 0, 0);
+	}
 	drawLowerArm();
 	glPopMatrix();
 	glPopMatrix();
 	glPopMatrix();
+	if (VAL(TERMINATER))
+		glPopMatrix();
 
 	glPopMatrix();//upper torso related
 	glPopMatrix();
@@ -438,8 +450,10 @@ void MyModel::drawLowerArm() {
 	glPushMatrix();
 	glRotated(90, 1, 0, 0);
 	drawCylinder(1, 0.1, 0.1);
+	if(VAL(TERMINATER))
+		drawHandGun();
 	glPopMatrix();
-
+	
 	glPushMatrix();
 	glTranslated(0, -1, 0);
 	drawSphere(0.25);
@@ -747,7 +761,28 @@ void MyModel::drawGatling() {
 }
 
 void MyModel::drawHandGun() {
-	
+
+	glPushMatrix();
+	glTranslated(0, 0, 0.5);
+	setDiffuseColor(0.2, 0.2, 0.2);
+	drawCylinder(0.5, 0.5, 0.3);
+	glPopMatrix();
+	setDiffuseColor(0.3, 0.3, 0.3);
+	glPushMatrix();
+	glTranslated(0, 0.3, 0.5);
+	drawCylinder(1, 0.1, 0.1);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(0.3, -0.15, 0.5);
+	drawCylinder(1, 0.1, 0.1);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-0.3, -0.15, 0.5);
+	drawCylinder(1, 0.1, 0.1);
+	glPopMatrix();
+	setDiffuseColor(COLOR_GREEN);
 }
 
 void MyModel::drwaComplexShape() {
@@ -799,13 +834,6 @@ void MyModel::drwaComplexShape() {
 		glVertex3d(pointTop[i - 1][0], pointTop[i - 1][1], pointTop[i - 1][2]);
 	}
 	glEnd();
-	/*
-	glNormal3d(0.0, -1.0, 0.0);
-	glVertex3d(pointTop[0][0], pointTop[0][1], pointTop[0][2]);
-	for (int i = 1; i < 5; i++) {
-		pointTop[i] = rotate108 * pointTop[i - 1];
-		glVertex3d(pointTop[i][0], pointTop[i][1], pointTop[i][2]);
-	}
-	*/
+	
 	
 }
