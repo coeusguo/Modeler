@@ -573,6 +573,8 @@ InverseKinematics2::InverseKinematics2(Vec3f end, float armLength1, float armLen
 Vec4f InverseKinematics2::getResult(Vec3f& destination) {
 	//cout << destination[0] << "," << destination[1] << "," << destination[2] << endl;
 	Vec3f yaxes(0, 1, 0);
+	if (enableConstraint&&destination[2] == 0)
+		destination[2] == -0.01;
 	if (enableConstraint&&destination[0] > -0.7&&destination[2] < 0)
 		destination[0] = -0.7;
 	/*

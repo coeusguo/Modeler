@@ -10,7 +10,7 @@
 //
 
 #include "bitmap.h"
- 
+
 BMP_BITMAPFILEHEADER bmfh; 
 BMP_BITMAPINFOHEADER bmih; 
 
@@ -104,7 +104,6 @@ void writeBMP(char *iname, int width, int height, unsigned char *data)
         pad = (bytes%4) ? 4-(bytes%4) : 0;
         bytes += pad;
         bytes *= height;
-
         bmfh.bfType = 0x4d42;    // "BM"
         bmfh.bfSize = sizeof(BMP_BITMAPFILEHEADER) + sizeof(BMP_BITMAPINFOHEADER) + bytes;
         bmfh.bfReserved1 = 0;

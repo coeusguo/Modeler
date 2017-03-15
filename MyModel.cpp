@@ -8,27 +8,43 @@
 #include "modelerglobals.h"
 #include "Metaball.h"
 #include "mat.h"
+#include "modelerui.h"
 #include <iostream>
 #include <vector>
 using namespace std;
 
-// To make a SampleModel, we inherit off of ModelerView
+// To make a SampleModel, we inherit off of 
 class MyModel : public ModelerView
 {
 private:
 	vector<Metaball> metaballs;
 	InverseKinematics2* rightArm;
 	InverseKinematics2* rightLeg;
+	int angle;
+	bool isAnimationOn;
+	int delta = 5;
+
+	int textureWidth ;
+	int textureHeight ;
+	GLuint textureName;
+	GLubyte texture[256][256][4];
+	bool isTextureLoaded;
+
 	Vec3f * calculateNewDir(Vec3f newDir, Vec3f lastDir);
 	void recursionTree3D(Vec3f dir, Vec3f nextdir, Vec3f currentLocationint, float length);
+	void changeAnimationAngle();
 public:
 	MyModel(int x, int y, int w, int h, char *label)
 		: ModelerView(x, y, w, h, label) {
 		initMetaball();
+		
 		Vec3f rightPoint1(-1.2, 5.4, 0);
 		Vec3f rightPoint2(-0.8, 3.2, 0);
 		rightArm = new InverseKinematics2(rightPoint1, 1.0, 1.0);
 		rightLeg = new InverseKinematics2(rightPoint2, 1.5, 1.7);
+		angle = 0;
+		isAnimationOn = false;
+		isTextureLoaded = false;
 	}
 	float* getRotateAngles(Vec3f target);//input an target vector,the funtion will return 2 float value,first is rotate from z coord about x,and second value is rotate about y
 
@@ -47,6 +63,8 @@ public:
 	void drawTorus();
 	void drwaComplexShape();
 	void demo();
+	void initTexture();
+	void drawTexture();
 };
 
 // We need to make a creator function, mostly because of
@@ -61,6 +79,7 @@ ModelerView* createSampleModel(int x, int y, int w, int h, char *label)
 // method of ModelerView to draw out SampleModel
 void MyModel::draw()
 {
+	
 	// This call takes care of a lot of the nasty projection 
 	// matrix stuff.  Unless you want to fudge directly with the 
 	// projection matrix, don't bother with this ...
@@ -99,6 +118,10 @@ void MyModel::draw()
 	else 
 		rightLeg->reset();
 
+	isAnimationOn = ModelerUserInterface::m_controlsAnimOnMenu->value();
+ 
+	if (isAnimationOn)
+		changeAnimationAngle();
 	// draw the floor
 	/**/
 	
@@ -164,7 +187,10 @@ void MyModel::draw()
 	}
 	else {
 		glPushMatrix();
-		glRotated(-VAL(WAVE), 0, 0, 1);
+		if(isAnimationOn)
+			glRotated(angle, 1, 0, 0);
+		else
+			glRotated(-VAL(WAVE), 0, 0, 1);
 		drawUpperArm();
 		glPushMatrix();
 		glTranslated(0, -1.0, 0);
@@ -183,7 +209,10 @@ void MyModel::draw()
 	glPushMatrix();
 	glTranslated(1.2, 0, 0);
 	glPushMatrix();
-	glRotated(VAL(WAVE), 0, 0, 1);
+	if (isAnimationOn)
+		glRotated(-angle, 1, 0, 0);
+	else
+		glRotated(VAL(WAVE), 0, 0, 1);
 	drawUpperArm();
 	glPushMatrix();
 	glTranslated(0, -1.0, 0);
@@ -260,6 +289,7 @@ void MyModel::draw()
 	glPopMatrix();
 
 	glPopMatrix();
+	
 	
 	
 
@@ -468,12 +498,26 @@ void MyModel::drawHead() {
 	glPushMatrix();
 	glRotated(-90, 1, 0, 0);
 	drawCylinder(0.3, 0.1, 0.1);
+	glPopMatrix();
+
 	glPushMatrix();
-	glTranslated(-0.4, -0.3, 0.3);
-	drawBox(0.8, 0.6, 1.0);
+	glTranslated(0.0, 0.9, -0.25);
+	drawCylinder(0.5, 0.6, 0.6);
+	initTexture();
+	glPushMatrix();
+	glTranslated(0.0, 0.0, 0.01);
+	drawCylinder(0.50, 0.59, 0.59);
+	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 	glPopMatrix();
-	//glPopMatrix();
+	/*glPushMatrix();
+	glTranslated(0, 0, 0.51);
+	initTexture();
+	drawTexture();
+	glPopMatrix();
+	*/
+	
+	
 }
 
 void MyModel::drawTorus() {
@@ -835,5 +879,82 @@ void MyModel::drwaComplexShape() {
 	}
 	glEnd();
 	
+	
+}
+
+void MyModel::changeAnimationAngle() {
+	
+	if (isAnimationOn) {
+		if (angle >= 60 || angle <= -60)
+			delta = -delta;
+		angle += delta;
+	}
+	else
+		angle = 0;
+
+}
+
+void MyModel::initTexture() {
+	
+	if (!isTextureLoaded) {
+		char* name = "./huaji.bmp";
+
+		unsigned char* temp = readBMP(name, textureWidth, textureHeight);
+		/*
+		texture = new GLubyte**[textureHeight];
+		for (int i = 0; i < textureHeight; i++) {
+			texture[i] = new GLubyte*[textureWidth];
+			for (int j = 0; j < textureWidth; j++)
+				texture[i][j] = new GLubyte[4];
+		}
+		*/
+		//cout << "width:" << textureWidth << ",height:" << textureHeight;
+		for (int row = 0; row < textureHeight; row++) {
+			for (int col = 0; col < textureWidth; col++) {
+				for (int i = 0; i < 3; i++)
+					texture[row][col][i] = temp[(row * textureWidth + col) * 3 + i];
+				//cout << "("<<texture[row][col][0] << "," << texture[row][col][1] << "," << texture[row][col][2]<<")";
+				texture[row][col][3] = 255;
+			}
+		}
+	}
+		
+	glShadeModel(GL_FLAT);
+	glEnable(GL_DEPTH_TEST);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	glGenTextures(1, &textureName);
+	glBindTexture(GL_TEXTURE_2D, textureName);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth,textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE,texture);
+	glEnable(GL_TEXTURE_2D);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+	glBindTexture(GL_TEXTURE_2D, textureName);
+		
+}
+
+void MyModel::drawTexture() {
+	
+	
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0, 0.0); glVertex3f(0.0, 0.0, 0.0);
+	glTexCoord2f(0.0, 1.0); glVertex3f(0.0, 1.0, 0.0);
+	glTexCoord2f(1.0, 1.0); glVertex3f(1.0, 1.0, 0.0);
+	glTexCoord2f(1.0, 0.0); glVertex3f(1.0, 0.0, 0.0);
+
+
+	glEnd();
+	
+	/*
+	glBegin(GL_TRIANGLE_FAN);
+	glTexCoord2f(0.5, 0.5); glVertex3f(0.0, 0.0, 0.0);
+	glEnd();
+	glFlush();
+	*/
+	glDisable(GL_TEXTURE_2D);
 	
 }
