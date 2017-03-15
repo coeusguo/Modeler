@@ -275,7 +275,6 @@ void MyModel::draw()
 	drawShank();
 	glPopMatrix();
 	glPopMatrix();
-	glPopMatrix();
 
 
 	//left leg no ik
