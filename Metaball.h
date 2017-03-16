@@ -23,4 +23,5 @@ public:
 	Metaball(int gridSize);
 	void addBalls(ball ball);
 	void drawMetaball();
+	void setBallPosition(int index, Vec3f newPosition);
 };

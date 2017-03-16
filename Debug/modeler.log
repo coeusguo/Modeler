@@ -3,36 +3,40 @@ c:\users\coeus\desktop\comp4411\modeler\inversekinematics.h(82): warning C4305: 
 c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(41): warning C4305: 'argument': truncation from 'double' to 'const float'
 c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(42): warning C4305: 'argument': truncation from 'double' to 'const float'
 c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(44): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(91): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(92): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(93): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(94): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
 c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(105): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(112): warning C4800: 'double': forcing value to bool 'true' or 'false' (performance warning)
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(121): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(308): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(309): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(310): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(312): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(313): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(314): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(534): warning C4553: '==': operator has no effect; did you intend '='?
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(613): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(665): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(672): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(694): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(695): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(697): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(697): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(699): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(699): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(717): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(754): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(764): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(773): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(782): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(790): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(119): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(126): warning C4800: 'double': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(135): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(324): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(325): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(326): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(328): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(329): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(330): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(573): warning C4553: '==': operator has no effect; did you intend '='?
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(596): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(657): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(709): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(716): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(738): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(739): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(741): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(741): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(743): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(743): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(761): warning C4305: 'argument': truncation from 'double' to 'float'
 c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(798): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(810): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(813): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(834): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(835): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(808): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(817): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(826): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(834): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(842): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(854): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(857): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(878): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\coeus\desktop\comp4411\modeler\mymodel.cpp(879): warning C4305: 'initializing': truncation from 'double' to 'float'
   modeler.vcxproj -> C:\Users\coeus\Desktop\comp4411\Modeler\.\Debug\modeler.exe
   modeler.vcxproj -> .\Debug/modeler.pdb (Full PDB)

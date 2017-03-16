@@ -11,6 +11,12 @@ void Metaball::addBalls(ball ball) {
 	isInitialized = false;
 }
 
+void Metaball::setBallPosition(int index, Vec3f newPosition) {
+	isInitialized = false;
+	if (index >= balls.size())
+		return;
+	balls[index].position = newPosition;
+}
 void Metaball::drawMetaball() {
 	if (!isInitialized) {
 		isInitialized = true;

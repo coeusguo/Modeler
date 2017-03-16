@@ -86,7 +86,21 @@ void MyModel::draw()
 	Vec4f result1(0, 0, 0, 0);
 	Vec4f result2(0, 0, 0, 0);
 	ModelerView::draw();
-
+	//change light source position
+	if (VAL(TURNONLIGHT)) {
+		GLfloat pos[4];
+		pos[0] = VAL(LIGHTX);
+		pos[1] = VAL(LIGHTY);
+		pos[2] = VAL(LIGHTZ);
+		pos[3] = 0.0f;
+		glLightfv(GL_LIGHT1, GL_POSITION, pos);
+		glPushMatrix();
+		glTranslated(VAL(LIGHTX), VAL(LIGHTY), VAL(LIGHTZ));
+		setDiffuseColor(1.0f, 1.0f, 1.0f);
+		drawBox(0.2, 0.2, 0.2);
+		glPopMatrix();
+		setDiffuseColor(COLOR_GREEN);
+	}
 	if (VAL(ENABLEIKARM)) {
 		Vec3f destination(VAL(IKXARM), VAL(IKYARM), VAL(IKZARM));
 		//cout << VAL(IKX) <<","<< VAL(IKY) << ","<< VAL(IKZ)<<endl;
@@ -220,6 +234,8 @@ void MyModel::draw()
 		glPushMatrix();
 		glRotated(-90, 1, 0, 0);
 	}
+	if(VAL(METABALL))
+		initMetaball();
 	drawLowerArm();
 	glPopMatrix();
 	glPopMatrix();
@@ -275,7 +291,7 @@ void MyModel::draw()
 	drawShank();
 	glPopMatrix();
 	glPopMatrix();
-
+	glPopMatrix();
 
 	//left leg no ik
 	glPushMatrix();
@@ -321,6 +337,16 @@ int main()
 	controls[TORUS] = ModelerControl("Draw Torus", 0, 1, 1, 0);
 	controls[TERMINATER] = ModelerControl("Terminater", 0, 1, 1, 0);
 	controls[COMPLEX] = ModelerControl("Show School Bag", 0, 1, 1, 0);
+	controls[TURNONLIGHT] = ModelerControl("Custom Light Source", 0, 1, 1, 0);
+	controls[LIGHTX] = ModelerControl("Light X", -5, 5, 0.1f, 0);
+	controls[LIGHTY] = ModelerControl("Light Y", 0, 5, 0.1f, 0);
+	controls[LIGHTZ] = ModelerControl("Light Z", -5, 5, 0.1f, 0);
+	controls[LEVELOFDETAIL] = ModelerControl("Level of Detail", 0, 5, 1, 5);
+	controls[METABALL] = ModelerControl("Show Metaball", 0, 1, 1, 0);
+	controls[METABALLX] = ModelerControl("Metaball X", -5, 5, 0.1f, 0);
+	controls[METABALLY] = ModelerControl("Metaball Y", -5, 5, 0.1f, 0);
+	controls[METABALLZ] = ModelerControl("Metaball Z", -5, 5, 0.1f, 0);
+	
 	
 	//controls[LEGCONSTRAINT1] = ModelerControl("Constraint angle1", 45, 135, 1, 135);
 	//controls[LEGCONSTRAINT2] = ModelerControl("Constraint angle", 30, 180, 1, 30);
@@ -330,12 +356,13 @@ int main()
 }
 
 void MyModel::drawUpperTorso() {
+	if (VAL(LEVELOFDETAIL) >= 1) {
 
-	glPushMatrix();
-				//glTranslated(0, 3, 0);
-		//center
+		glPushMatrix();
+		//glTranslated(0, 3, 0);
+//center
 		drawSphere(0.2);
-		
+
 		//right shoulder
 		glPushMatrix();
 		glRotated(-90, 0, 1, 0);
@@ -359,59 +386,60 @@ void MyModel::drawUpperTorso() {
 		drawCylinder(1.3, 0.1, 0.1);
 		glPopMatrix();
 
-	glPopMatrix();
-
-	if (VAL(TERMINATER)) {
-		glPushMatrix();
-		glTranslated(1.6, 0.6, -0.5);
-		glPushMatrix();
-		glRotated(-30, 0, 0, 1);
-		glPushMatrix();
-		glRotated(-30, 1, 0, 0);
-		drawGatling();
-		glPopMatrix();
-		glPopMatrix();
 		glPopMatrix();
 
-		glPushMatrix();
-		glTranslated(-1.6, 0.6, -0.5);
-		glPushMatrix();
-		glRotated(30, 0, 0, 1);
-		glPushMatrix();
-		glRotated(-30, 1, 0, 0);
-		drawGatling();
+		if (VAL(TERMINATER)) {
+			glPushMatrix();
+			glTranslated(1.6, 0.6, -0.5);
+			glPushMatrix();
+			glRotated(-30, 0, 0, 1);
+			glPushMatrix();
+			glRotated(-30, 1, 0, 0);
+			drawGatling();
+			glPopMatrix();
+			glPopMatrix();
+			glPopMatrix();
 
-		glPopMatrix();
-		glPopMatrix();
-		glPopMatrix();
-		setDiffuseColor(COLOR_GREEN);
-	}
+			glPushMatrix();
+			glTranslated(-1.6, 0.6, -0.5);
+			glPushMatrix();
+			glRotated(30, 0, 0, 1);
+			glPushMatrix();
+			glRotated(-30, 1, 0, 0);
+			drawGatling();
 
-	if (VAL(COMPLEX)) {
-		glPushMatrix();
-		glTranslated(0, -0.5, 0);
-		glPushMatrix();
-		glRotated(-90, 1, 0, 0);
-		drwaComplexShape();
-		glPopMatrix();
-		glPopMatrix();
+			glPopMatrix();
+			glPopMatrix();
+			glPopMatrix();
+			setDiffuseColor(COLOR_GREEN);
+		}
+
+		if (VAL(COMPLEX)) {
+			glPushMatrix();
+			glTranslated(0, -0.5, 0);
+			glPushMatrix();
+			glRotated(-90, 1, 0, 0);
+			drwaComplexShape();
+			glPopMatrix();
+			glPopMatrix();
+		}
 	}
 }
 
 void MyModel::drawLowerTorso() {
-	
-	//waist joint
-	drawSphere(0.2);
+	if (VAL(LEVELOFDETAIL) >= 2) {
+		//waist joint
+		drawSphere(0.2);
+		
+		//lower spine
+		glPushMatrix();
+		glRotated(90, 1, 0, 0);
+		drawCylinder(1.0, 0.1, 0.1);
 
-	//lower spine
-	glPushMatrix();
-	glRotated(90, 1, 0, 0);
-	drawCylinder(1.0, 0.1, 0.1);
 
-
-	glPushMatrix();
-	glTranslated(0, 0, 1.0);
-	drawSphere(0.2);
+		glPushMatrix();
+		glTranslated(0, 0, 1.0);
+		drawSphere(0.2);
 
 		glPushMatrix();
 		glRotated(90, 0, 1, 0);
@@ -427,88 +455,99 @@ void MyModel::drawLowerTorso() {
 		drawSphere(0.2);
 		glPopMatrix();
 		glPopMatrix();
+		glPopMatrix();
 
-	glPopMatrix();
+	}
 }
 
 void MyModel::drawThigh() {
-	glPushMatrix();
-	glRotated(90, 1, 0, 0);
-	drawCylinder(1.5, 0.1, 0.1);
-	glTranslated(0, 0, 1.5);
-	drawSphere(0.2);
-	glPopMatrix();
+	if (VAL(LEVELOFDETAIL) >= 3) {
+		glPushMatrix();
+		glRotated(90, 1, 0, 0);
+		drawCylinder(1.5, 0.1, 0.1);
+		glTranslated(0, 0, 1.5);
+		drawSphere(0.2);
+		glPopMatrix();
+	}
 }
 
 void MyModel::drawShank() {
 	//glPushMatrix();
 	//glTranslated(0, 3, 0);
-	glPushMatrix();
-	glRotated(90, 1, 0, 0);
-	drawCylinder(1.5, 0.1, 0.1);
-	
+	if (VAL(LEVELOFDETAIL) == 5) {
+		glPushMatrix();
+		glRotated(90, 1, 0, 0);
+		drawCylinder(1.5, 0.1, 0.1);
 
-	glPushMatrix();
-	glTranslated(0, 0, 1.5);
-	
-	drawCylinder(0.2, 0.4, 0.4);
-	glPopMatrix();
-	glPopMatrix();
-	glPopMatrix();
 
+		glPushMatrix();
+		glTranslated(0, 0, 1.5);
+
+		drawCylinder(0.2, 0.4, 0.4);
+		glPopMatrix();
+		glPopMatrix();
+
+	}
 }
 
 void MyModel::drawUpperArm() {
 	//glPushMatrix();
 	//glTranslated(0, 3, 0);
-	glPushMatrix();
-	glRotated(90, 1, 0, 0);
-	drawCylinder(1, 0.1, 0.1);
-	glPopMatrix();
+	if (VAL(LEVELOFDETAIL) >= 2) {
+		glPushMatrix();
+		glRotated(90, 1, 0, 0);
+		drawCylinder(1, 0.1, 0.1);
+		glPopMatrix();
 
-	glPushMatrix();
-	glTranslated(0, -1, 0);
-	drawSphere(0.2);
-	glPopMatrix();
+		glPushMatrix();
+		glTranslated(0, -1, 0);
+		drawSphere(0.2);
+		glPopMatrix();
+	}
 	//glPopMatrix();
 }
 
 void MyModel::drawLowerArm() {
 	//glPushMatrix();
-	//glTranslated(0, 3, 0);
-	glPushMatrix();
-	glRotated(90, 1, 0, 0);
-	drawCylinder(1, 0.1, 0.1);
-	if(VAL(TERMINATER))
-		drawHandGun();
-	glPopMatrix();
-	
-	glPushMatrix();
-	glTranslated(0, -1, 0);
-	drawSphere(0.25);
-	glPopMatrix();
+	if (VAL(LEVELOFDETAIL) >= 3) {
+		//glTranslated(0, 3, 0);
+		glPushMatrix();
+		glRotated(90, 1, 0, 0);
+		drawCylinder(1, 0.1, 0.1);
+		if (VAL(TERMINATER))
+			drawHandGun();
+		glPopMatrix();
+
+		glPushMatrix();
+		glTranslated(0, -1, 0);
+		drawSphere(0.25);
+		glPopMatrix();
+	}
 	//glPopMatrix();
 }
 
 void MyModel::drawHead() {
 	//glPushMatrix();
 	//glTranslated(0, 3, 0);
-	
-	glPushMatrix();
-	glRotated(-90, 1, 0, 0);
-	drawCylinder(0.3, 0.1, 0.1);
-	glPopMatrix();
+	if (VAL(LEVELOFDETAIL) >= 2) {
+		glPushMatrix();
+		glRotated(-90, 1, 0, 0);
+		drawCylinder(0.3, 0.1, 0.1);
+		glPopMatrix();
 
-	glPushMatrix();
-	glTranslated(0.0, 0.9, -0.25);
-	drawCylinder(0.5, 0.6, 0.6);
-	initTexture();
-	glPushMatrix();
-	glTranslated(0.0, 0.0, 0.01);
-	drawCylinder(0.50, 0.59, 0.59);
-	glDisable(GL_TEXTURE_2D);
-	glPopMatrix();
-	glPopMatrix();
+		glPushMatrix();
+		glTranslated(0.0, 0.9, -0.25);
+		drawCylinder(0.5, 0.6, 0.6);
+		initTexture();
+		glPushMatrix();
+		glTranslated(0.0, 0.0, 0.01);
+		drawCylinder(0.50, 0.59, 0.59);
+		glDisable(GL_TEXTURE_2D);
+	
+		glPopMatrix();
+
+		glPopMatrix();
+	}
 	/*glPushMatrix();
 	glTranslated(0, 0, 0.51);
 	initTexture();
@@ -553,12 +592,17 @@ void MyModel::drawTorus() {
 }
 
 void MyModel::initMetaball() {
-	ball ball1(0, 0, 0, 4);
-	ball ball2(5, 5, 5, 3);
+	ball ball3(0, -3, 0, 1.5);
+	ball ball1(VAL(METABALLX), VAL(METABALLY) + 0.5,VAL(METABALLZ), 2);
+	ball ball2(0,5, 0, 2 );
 	Metaball balls(40);
 	balls.addBalls(ball1);
 	balls.addBalls(ball2);
+	balls.addBalls(ball3);
+	glPushMatrix();
+	glScaled(0.2, 0.2, 0.2);
 	balls.drawMetaball();
+	glPopMatrix();
 }
 
 void MyModel::demo() {
