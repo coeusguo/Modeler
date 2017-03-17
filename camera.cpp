@@ -3,7 +3,8 @@
 #include <gl/glu.h>
 
 #include "camera.h"
-
+#include "modelerglobals.h"
+#include "modelerui.h"
 #pragma warning(push)
 #pragma warning(disable : 4244)
 
@@ -80,13 +81,14 @@ void Camera::calculateViewingTransformParameters()
 	Mat4f originXform;
 
 	Vec3f upVector;
-
+	
+		loaded = true;
 	MakeHTrans(dollyXform, Vec3f(0,0,mDolly));
 	MakeHRotY(azimXform, mAzimuth);
 	MakeHRotX(elevXform, mElevation);
 	MakeDiagonal(twistXform, 1.0f);
 	MakeHTrans(originXform, mLookAt);
-	
+	cout << mDolly << endl;
 	mPosition = Vec3f(0,0,0);
 	// grouped for (mat4 * vec3) ops instead of (mat4 * mat4) ops
 	mPosition = originXform * (azimXform * (elevXform * (dollyXform * mPosition)));
@@ -173,9 +175,28 @@ void Camera::releaseMouse( int x, int y )
 
 
 void Camera::applyViewingTransform() {
+	if (loaded) {
+		if (VAL(FRAMEALL)) {
+			if (mDolly > -20) {
+				mDolly = -20;
+
+			}
+			if (VAL(LSYSTEM)) {
+				int level = VAL(LSYSTEMLEVEL);
+				if (level >= 4) {
+					mDolly = -50 - (level - 4) * 40;
+				}
+				else{
+					mDolly = -20;
+				}
+			}
+			mDirtyTransform = true;
+		}
+	}
 	if( mDirtyTransform )
 		calculateViewingTransformParameters();
 
+	
 	// Place the camera at mPosition, aim the camera at
 	// mLookAt, and twist the camera such that mUpVector is up
 	gluLookAt(	mPosition[0], mPosition[1], mPosition[2],

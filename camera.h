@@ -18,7 +18,7 @@ protected:
     float		mAzimuth;
     float		mDolly;
     float		mTwist; // Not implemented yet
-    
+	bool		loaded = false;
     Vec3f		mLookAt;
     
     Vec3f		mPosition;

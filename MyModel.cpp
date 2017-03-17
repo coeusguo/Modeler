@@ -346,7 +346,7 @@ int main()
 	controls[METABALLX] = ModelerControl("Metaball X", -5, 5, 0.1f, 0);
 	controls[METABALLY] = ModelerControl("Metaball Y", -5, 5, 0.1f, 0);
 	controls[METABALLZ] = ModelerControl("Metaball Z", -5, 5, 0.1f, 0);
-	
+	controls[FRAMEALL] = ModelerControl("Frame All", 0, 1, 1, 0);
 	
 	//controls[LEGCONSTRAINT1] = ModelerControl("Constraint angle1", 45, 135, 1, 135);
 	//controls[LEGCONSTRAINT2] = ModelerControl("Constraint angle", 30, 180, 1, 30);
